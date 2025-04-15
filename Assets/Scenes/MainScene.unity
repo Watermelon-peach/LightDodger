@@ -1774,6 +1774,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waypointParent: {fileID: 1696855056}
+  targetPlayer: {fileID: 1900237499}
+  sensorRange: 10
+  acceleration: 10
+  startSpeed: 0
   moveSpeed: 2
   waitTime: 2
   lookAroundAngle: 45
@@ -1787,7 +1791,7 @@ Transform:
   m_GameObject: {fileID: 6196940344897676609}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -9}
+  m_LocalPosition: {x: 0, y: 0, z: -4.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1821,7 +1825,7 @@ Transform:
   m_GameObject: {fileID: 3197834850752941616}
   serializedVersion: 2
   m_LocalRotation: {x: 0.5057528, y: -0, z: -0, w: 0.8626785}
-  m_LocalPosition: {x: 0, y: 7, z: 0}
+  m_LocalPosition: {x: 0, y: 7, z: -4.7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -5512,6 +5516,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20f2ca1b2d24da843be559a22ffb007b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  chaseModeMaterial: {fileID: 2100000, guid: 1b01a8327835d3a488ac04553beeda8f, type: 2}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

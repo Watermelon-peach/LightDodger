@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace LightDodger
@@ -12,8 +13,10 @@ namespace LightDodger
 
         // 체이스모드 시 플레이어 추적
         public Transform targetPlayer;
-        public float sensorArrange = 7f;
+        public float sensorRange = 10f;
+        public float acceleration = 5f;
 
+        public float startSpeed;
         public float moveSpeed = 2f;
         public float waitTime = 2f;
         public float lookAroundAngle = 45f;
@@ -25,9 +28,16 @@ namespace LightDodger
         private float currentAngle = 0f;
         private int lookDir = 1;
         private int direction = 1; // 1이면 정방향, -1이면 역방향
-        private bool isChaseMode;   //ChaseMode on/off
+        private static bool isChaseMode;   //ChaseMode on/off
         #endregion
 
+        #region Property
+        //읽기전용속성
+        public static bool IsChaseMode
+        {
+            get { return isChaseMode; }
+        }
+        #endregion
         void Start()
         {
             // 자식(경로)들 불러오기
@@ -37,6 +47,7 @@ namespace LightDodger
             }
             //ChaseMode 초기화
             isChaseMode = false;
+            startSpeed = moveSpeed;
         }
 
         void Update()
@@ -44,16 +55,9 @@ namespace LightDodger
             //범위내 플레이어 감지
             UpdateTarget();
 
-            // 체이스모드
-            if (isChaseMode)
-            {
-                ChaseMode();
-                return;
-            }
-
             // 패트롤모드
-            //경로가 최소 2개 이상일 때만 작동
-            if (waypoints.Count < 2) return;
+            //경로가 최소 2개 이상일 때, isChaseMode가 false일 때만 작동
+            if (waypoints.Count < 2 || isChaseMode) return;
             if (isLookingAround)
                 LookAround();
             else
@@ -62,13 +66,33 @@ namespace LightDodger
 
         void UpdateTarget()
         {
-
+            float distance = Vector3.Distance(transform.position, targetPlayer.position);
+            if (distance <= sensorRange)
+            {
+                //체이스모드 on
+                isChaseMode = true;
+                ChaseMode();
+            }
+            else
+            {
+                //체이스모드 off
+                isChaseMode = false;
+                moveSpeed = startSpeed;
+            }
         }
         //기즈모
-
+        private void OnDrawGizmosSelected()
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(this.transform.position, sensorRange);
+        }
         void ChaseMode()
         {
-
+            moveSpeed = Mathf.Lerp(moveSpeed, startSpeed*4, Time.deltaTime * acceleration);
+            Vector3 dir = (targetPlayer.position - transform.position).normalized;
+            dir.y = 0;
+            transform.Translate(dir * Time.deltaTime * moveSpeed,Space.World);
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir), Time.deltaTime);
         }
 
         void MoveToWaypoints()
