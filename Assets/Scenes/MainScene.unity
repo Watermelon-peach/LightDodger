@@ -270,13 +270,14 @@ GameObject:
   m_Component:
   - component: {fileID: 334321902}
   - component: {fileID: 334321903}
+  - component: {fileID: 334321904}
   m_Layer: 5
   m_Name: GameOverUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &334321902
 RectTransform:
   m_ObjectHideFlags: 0
@@ -307,6 +308,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 334321901}
   m_CullTransparentMesh: 1
+--- !u!114 &334321904
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 334321901}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a1ea05369e910a47bccb3b8b7695ecb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &371316534
 GameObject:
   m_ObjectHideFlags: 0
@@ -1127,6 +1140,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timeText: {fileID: 2028618505}
   gameOverUI: {fileID: 334321901}
+  ActivateCheat: 0
 --- !u!4 &1300822197
 Transform:
   m_ObjectHideFlags: 0
@@ -1224,7 +1238,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1332141574}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 334321904}
+        m_TargetAssemblyTypeName: LightDodger.GameOverUI, Assembly-CSharp
+        m_MethodName: Menu
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1332141574
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1830,7 +1856,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1791477234}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 334321904}
+        m_TargetAssemblyTypeName: LightDodger.GameOverUI, Assembly-CSharp
+        m_MethodName: Retry
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1791477234
 MonoBehaviour:
   m_ObjectHideFlags: 0
