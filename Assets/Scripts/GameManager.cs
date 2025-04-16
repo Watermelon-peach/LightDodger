@@ -16,7 +16,6 @@ public class GameManager : MonoBehaviour
         }
 
         Instance = this;
-        DontDestroyOnLoad(gameObject); // 씬이 바뀌어도 유지
     }
     #endregion
 
@@ -24,17 +23,38 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI timeText;
     public GameObject gameOverUI;
 
+    //치트키 활성화
+    [SerializeField] private bool ActivateCheat = false;
+
     private float surviveTime = 0f;
-    private bool isGameOver = false;
+    private static bool isGameOver = false;
     #endregion
 
+    #region Property
+    public static bool IsGameOver
+    {
+        get { return isGameOver; }
+    }
+    #endregion
+
+    private void Start()
+    {
+        isGameOver = false;
+    }
 
     void Update()
     {
+
         if (isGameOver) return;
 
         surviveTime += Time.deltaTime;
         timeText.text = "Time: " + surviveTime.ToString("F2");
+
+        //치트
+        if (Input.GetKeyDown(KeyCode.K) && ActivateCheat)
+        {
+            PlayerDied();
+        }
     }
 
     public void PlayerDied()
@@ -43,6 +63,12 @@ public class GameManager : MonoBehaviour
 
         isGameOver = true;
         gameOverUI.SetActive(true);
+
+        // 마우스 커서 다시 활성화
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+
         Time.timeScale = 0f; // 게임 정지
     }
+
 }

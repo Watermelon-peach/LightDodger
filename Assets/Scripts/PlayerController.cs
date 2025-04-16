@@ -10,6 +10,9 @@ namespace LightDodger
         public float moveSpeed;
         public float mouseSensitivity = 2f;
         public Transform cameraTransform; // 1인칭 카메라
+        //스크롤
+        public float scrollMin = 10f;
+        public float scrollMax = 20f;
 
         private Rigidbody rb;
         private float runSpeed;
@@ -32,6 +35,7 @@ namespace LightDodger
         {
             Move();
             LookAround();
+            UpDown();
         }
 
         void Move()
@@ -45,7 +49,17 @@ namespace LightDodger
             rb.MovePosition(rb.position + move * moveSpeed * Time.deltaTime);
         }
 
-        
+        void UpDown()
+        {
+            //시야 UpDown
+            float scroll = Input.GetAxis("Mouse ScrollWheel");
+
+            Vector3 upMove = cameraTransform.position;
+            upMove.y -= (scroll * 1000) * Time.deltaTime * 3f;
+
+            upMove.y = Mathf.Clamp(upMove.y, scrollMin, scrollMax); //(pos.y : 10f 이상, 40f 이하)
+            cameraTransform.position = upMove;
+        }
 
         void LookAround()
         {

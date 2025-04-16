@@ -92,7 +92,7 @@ namespace LightDodger
             Vector3 dir = (targetPlayer.position - transform.position).normalized;
             dir.y = 0;
             transform.Translate(dir * Time.deltaTime * moveSpeed,Space.World);
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir), Time.deltaTime);
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir), Time.deltaTime * 10f);
         }
 
         void MoveToWaypoints()
