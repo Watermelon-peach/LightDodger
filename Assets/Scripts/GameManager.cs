@@ -49,13 +49,15 @@ public class GameManager : MonoBehaviour
 
         surviveTime += Time.deltaTime;
         timeText.text = "Time: " + surviveTime.ToString("F2");
-
+        
         //치트
         if (Input.GetKeyDown(KeyCode.K) && ActivateCheat)
         {
             PlayerDied();
         }
     }
+
+    
 
     public void PlayerDied()
     {

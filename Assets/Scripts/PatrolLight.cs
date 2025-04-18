@@ -13,15 +13,18 @@ namespace LightDodger
 
         // 체이스모드 시 플레이어 추적
         public Transform targetPlayer;
+        public Transform sensor;
+        public Light light;
+        private Color startColor;
+
         public float sensorRange = 10f;
         public float acceleration = 5f;
-
-        public float startSpeed;
-        public float moveSpeed = 2f;
+        public float moveSpeed = 4f;
         public float waitTime = 2f;
         public float lookAroundAngle = 45f;
         public float lookAroundSpeed = 50f;
 
+        private float startSpeed;
         private int currentIndex = 0;
         private bool isLookingAround = false;
         private float waitTimer = 0f;
@@ -40,6 +43,8 @@ namespace LightDodger
         #endregion
         void Start()
         {
+            //라이트 컬러 초기화
+            startColor = light.color;
             // 자식(경로)들 불러오기
             for (int i = 0; i < waypointParent.childCount; i++)
             {
@@ -66,7 +71,7 @@ namespace LightDodger
 
         void UpdateTarget()
         {
-            float distance = Vector3.Distance(transform.position, targetPlayer.position);
+            float distance = Vector3.Distance(sensor.position, targetPlayer.position);
             if (distance <= sensorRange)
             {
                 //체이스모드 on
@@ -76,6 +81,7 @@ namespace LightDodger
             else
             {
                 //체이스모드 off
+                light.color = startColor;
                 isChaseMode = false;
                 moveSpeed = startSpeed;
             }
@@ -88,7 +94,8 @@ namespace LightDodger
         }
         void ChaseMode()
         {
-            moveSpeed = Mathf.Lerp(moveSpeed, startSpeed*4, Time.deltaTime * acceleration);
+            light.color = Color.red;
+            moveSpeed = Mathf.Lerp(moveSpeed, startSpeed*2, Time.deltaTime * acceleration);
             Vector3 dir = (targetPlayer.position - transform.position).normalized;
             dir.y = 0;
             transform.Translate(dir * Time.deltaTime * moveSpeed,Space.World);

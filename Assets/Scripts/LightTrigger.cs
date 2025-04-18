@@ -6,18 +6,20 @@ public class LightTrigger : MonoBehaviour
     #region Field
     public Material chaseModeMaterial;
 
+    private MeshRenderer meshRenderer;
     private Material startMaterial;
     #endregion
     private void Start()
     {
+        //참조
+        meshRenderer = this.GetComponent<MeshRenderer>();
         //초기화
-        startMaterial = gameObject.GetComponent<MeshRenderer>().material;
+        startMaterial = meshRenderer.material;
     }
 
     private void Update()
     {
-        // 혹시 이거 업데이트에 넣으면 안좋은가?
-        gameObject.GetComponent<MeshRenderer>().material = (PatrolLight.IsChaseMode) ? chaseModeMaterial : startMaterial;
+        meshRenderer.material = (PatrolLight.IsChaseMode)? chaseModeMaterial : startMaterial;
     }
 
     private void OnTriggerEnter(Collider other)
